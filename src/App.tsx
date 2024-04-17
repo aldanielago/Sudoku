@@ -3,7 +3,6 @@ import './index.css'
 const board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0))
 
 function App() {
-  console.log(board)
   return (
     <>
       <div className="board">
