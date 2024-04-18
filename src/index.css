@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap');
+
 :root {
   --gray-200: #dedede;
   --gray-100: #f5f5f5;
   --blue-500: #3a6bdf;
+  --font-text: "Patrick Hand", cursive;
+  --font-num: "Comic Neue", cursive;
+}
+
+/* Principal board */
+.title {
+  text-align: center;
+  font-family: var(--font-text);
+  color: var(--blue-500);
+  font-size: 2rem;
+  margin: 20px 0;
+  letter-spacing: 4px;
 }
 
 .board {
@@ -16,8 +30,9 @@
 .cell {
   padding: 8px;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   border: 1px solid var(--gray-200);
+  font-family: var(--font-num);
 }
 
 .row:nth-child(3n) .cell {
@@ -26,4 +41,26 @@
 
 .cell:nth-child(3n) {
   border-bottom: 3px solid var(--gray-200);
+}
+
+/*Range*/
+.rangeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  gap: 10px ;
+}
+
+.num {
+  padding: 12px 8px;
+  background-color: var(--gray-100);
+  border: 0.5px solid var(--gray-200);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-num);
+}
+
+.num:focus {
+  outline: none;
 }

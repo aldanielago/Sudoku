@@ -1,20 +1,31 @@
 import './index.css'
+import React from 'react';
+import { Cell } from "./components/cell";
 
-const board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0))
+type Board = number[][]
 
-function App() {
+const board: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0));
+const range = Array.from({ length: 9 }, (_, i) => i + 1);
+
+const App: React.FC = () => {
   return (
-    <>
+    <section>
+      <h1 className="title">Sudoku</h1>
       <div className="board">
-        { board.map((row, i) => (
+        { board.map((row , i:number) => (
           <div key={i} className="row">
-            { row.map((cell, j) => (
-              <div key={j} className="cell">{cell}</div>
+            { row.map((cell: number, j: number) => (
+              <Cell key={j} cell={cell} />
             )) }
           </div>
         )) }
       </div>
-    </>
+      <div className="rangeContainer">
+        { range.map((num: number, i: number) => (
+          <button key={i} className="num">{ num }</button>
+        )) }
+      </div>
+    </section>
   )
 }
 
