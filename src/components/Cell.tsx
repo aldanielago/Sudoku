@@ -1,11 +1,15 @@
-export function Cell({ cell, idCell, isSelected, onClick } :
-  { cell : number | null, idCell: number, isSelected: number | null, onClick: (idCell: number) => void}
-) {
-  console.log(cell, idCell, isSelected)
+export function Cell({ cellNumber, coordinates, selectedCell, onClick } :
+  { cellNumber : number | null,
+    coordinates: Array<number> | null,
+    selectedCell: Array<number> | null,
+    onClick: (coordinates: Array<number> | null) => void
+  }) {
+  const isSelected = selectedCell != null && coordinates != null && selectedCell[0] == coordinates[0] && selectedCell[1] == coordinates[1];
   return (
-    <div className={`cell ${isSelected == idCell && 'selectedCell'}`}
-      onClick={() => onClick(idCell)}>
-      { cell }
+    <div className={`cell ${isSelected && 'selectedCell'}`}
+      onClick={() => onClick(coordinates)}
+    >
+      { cellNumber }
     </div>
   )
 }
