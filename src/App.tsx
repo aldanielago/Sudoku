@@ -1,21 +1,27 @@
 import './index.css'
 import React from 'react';
-import { Cell } from "./components/cell";
+import { Cell } from "./components/Cell";
 
-type Board = number[][]
+type Board = number[][] | null[][];
 
-const board: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0));
+const board: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
 const range = Array.from({ length: 9 }, (_, i) => i + 1);
 
 const App: React.FC = () => {
+  const [ selectedCell, setSelectedCell ] = React.useState<number | null>(null);
+
+  const handleSelectedCell = (idCell: number): void => {
+    setSelectedCell(idCell);
+  }
+
   return (
     <section>
       <h1 className="title">Sudoku</h1>
       <div className="board">
         { board.map((row , i:number) => (
           <div key={i} className="row">
-            { row.map((cell: number, j: number) => (
-              <Cell key={j} cell={cell} />
+            { row.map((cell: number | null, j: number) => (
+              <Cell key={j} idCell={j} cell={cell} isSelected={selectedCell} onClick={handleSelectedCell}/>
             )) }
           </div>
         )) }

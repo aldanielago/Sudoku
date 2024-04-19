@@ -29,6 +29,7 @@
 
 .cell {
   padding: 8px;
+  height: 12px;
   text-align: center;
   font-size: 1rem;
   border: 1px solid var(--gray-200);
@@ -63,4 +64,9 @@
 
 .num:focus {
   outline: none;
+}
+
+/* Cells */
+.selectedCell {
+  background-color: var(--gray-100);
 }
