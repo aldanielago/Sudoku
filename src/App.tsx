@@ -1,6 +1,8 @@
 import './index.css'
 import React from 'react';
 import { Cell } from "./components/Cell";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type BoardCell = number | null;
 type Board = BoardCell[][];
@@ -10,6 +12,7 @@ const range = Array.from({ length: 9 }, (_, i) => i + 1);
 
 const App: React.FC = () => {
   const [ selectedCell, setSelectedCell ] = React.useState<Array<number> | null>(null);
+  const notify = () => toast("Select a cell first!");
 
   const handleSelectedCell = (coordinates: Array<number> | null): void => {
     setSelectedCell(coordinates);
@@ -22,11 +25,24 @@ const App: React.FC = () => {
         board[i][j] = num;
       }
       setSelectedCell(null);
+    } else {
+      notify();
     }
   }
 
   return (
     <section>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <h1 className="title">Sudoku</h1>
       <div className="board">
         { board.map((row , i:number) => (
