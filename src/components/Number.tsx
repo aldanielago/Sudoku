@@ -1,12 +1,16 @@
-export function Number({ num, selectedNumber, fastMode, handleSelectedNumber } :
-  { num: number,
-    selectedNumber: number | null,
-    fastMode: boolean,
-    handleSelectedNumber: (num: number) => void
-  }) {
+import { useContext } from 'react';
+import { GameContext } from '../contexts/GameContext';
+
+export function Number({ num } : { num: number }) {
+  const selectedNumber = useContext(GameContext).selectedNumber;
+  const fastMode = useContext(GameContext).fastMode;
+  const handleSelectedNumber = useContext(GameContext).handleSelectedNumber;
 
   const isSelectedNumber = selectedNumber === num;
   return (
-    <button className={`num ${(fastMode && selectedNumber) && 'selectedNumber'}  ${(fastMode && !isSelectedNumber) && 'unselectedNumber'}`} onClick={() => handleSelectedNumber(num)}>{ num }</button>
+    <button className={`num ${(fastMode && selectedNumber) && 'selectedNumber'}  ${(fastMode && !isSelectedNumber) && 'unselectedNumber'}`} 
+      onClick={() => handleSelectedNumber(num)}>
+      { num }
+    </button>
   )
 }
