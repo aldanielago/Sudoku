@@ -5,11 +5,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Number } from './components/Number';
 import { GameContext } from './contexts/GameContext';
+import { IoReturnDownBack } from "react-icons/io5";
+import { CiEraser } from "react-icons/ci";
 
 const App: React.FC = () => {
   const board = useContext(GameContext).board;
   const range = useContext(GameContext).range;
-  const handleFastMode = useContext(GameContext);
+  const handleFastMode = useContext(GameContext).handleFastMode;
 
   return (
     <section>
@@ -35,6 +37,10 @@ const App: React.FC = () => {
         )) }
       </div>
       <div className="optionsSection">
+        <div className="smallContainer">
+          <IoReturnDownBack className="icon" />
+          <CiEraser className="icon"/>
+        </div>
         <label className="switch">
           <input type="checkbox" onClick={handleFastMode}/>
           <span className="slider"></span>

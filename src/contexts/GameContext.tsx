@@ -14,7 +14,7 @@ type GameContextType = {
   handleSelectedCell: (coordinates: Array<number> | null) => void,
   handleFastMode: () => void,
   handleSelectedNumber: (num: number) => void,
-  handleAssignNumber: (num: number) => void,
+  handleAssignNumber: (num: number, coordinates: Array<number> | null) => void,
 };
 
 const initialContext: GameContextType = {
@@ -29,12 +29,12 @@ const initialContext: GameContextType = {
   handleAssignNumber: () => {},
 };
 
-const board: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
+const inicialBoard: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
 const range: number[] = Array.from({ length: 9 }, (_, i) => i + 1);
 const GameContext = createContext<GameContextType>(initialContext);
 
 function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
-
+  const [ board, setBoard ] = useState<Board>(inicialBoard);
   const [ selectedCell, setSelectedCell ] = useState<Array<number> | null>(null);
   const [ selectedNumber, setSelectedNumber ] = useState<number | null>(null);
   const [ fastMode, setFastMode ] = useState<boolean>(false);
@@ -54,11 +54,13 @@ function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
     handleAssignNumber(num);
   }
 
-  const handleAssignNumber = (num: number): void => {
-    if (selectedCell != null) {
-      const [i, j] = selectedCell;
+  const handleAssignNumber = (num: number, coordinates: Array<number> | null = selectedCell): void => {
+    if (coordinates != null) {
+      const [i, j] = coordinates;
       if(board != null){
-        board[i][j] = num;
+        const newBoard = [...board];
+        newBoard[i][j] = num;
+        setBoard(newBoard);
       }
       fastMode ? setSelectedNumber(num) : setSelectedNumber(null);
       setSelectedCell(null);
