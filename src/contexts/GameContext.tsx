@@ -12,6 +12,7 @@ type GameContextType = {
   fastMode: boolean,
   range: Array<number>,
   handleSelectedCell: (coordinates: Array<number> | null) => void,
+  handleDeleteNumber: () => void,
   handleFastMode: () => void,
   handleSelectedNumber: (num: number) => void,
   handleAssignNumber: (num: number, coordinates: Array<number> | null) => void,
@@ -24,6 +25,7 @@ const initialContext: GameContextType = {
   fastMode: false,
   range: Array.from({ length: 9 }, (_, i) => i + 1),
   handleSelectedCell: () => {},
+  handleDeleteNumber: () => {},
   handleFastMode: () => {},
   handleSelectedNumber: () => {},
   handleAssignNumber: () => {},
@@ -71,6 +73,22 @@ function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
     }
   }
 
+  const handleDeleteNumber = (): void => {
+    const coordinates: Array<number> | null = selectedCell
+    if (coordinates != null) {
+      const [i, j] = coordinates;
+      console.log(coordinates, selectedCell);
+      if(board != null){
+        const newBoard = [...board];
+        newBoard[i][j] = null;
+        setBoard(newBoard);
+      }
+      setSelectedCell(null);
+    } else {
+      notify();
+    }
+  }
+
   return (
     <GameContext.Provider value={{
       board,
@@ -78,6 +96,7 @@ function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
       selectedCell,
       fastMode,
       range,
+      handleDeleteNumber,
       handleSelectedCell,
       handleFastMode,
       handleSelectedNumber,

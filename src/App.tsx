@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const board = useContext(GameContext).board;
   const range = useContext(GameContext).range;
   const handleFastMode = useContext(GameContext).handleFastMode;
+  const handleDeleteNumber = useContext(GameContext).handleDeleteNumber;
 
   return (
     <section>
@@ -39,7 +40,7 @@ const App: React.FC = () => {
       <div className="optionsSection">
         <div className="smallContainer">
           <IoReturnDownBack className="icon" />
-          <CiEraser className="icon"/>
+          <CiEraser className="icon" onClick={handleDeleteNumber}/>
         </div>
         <label className="switch">
           <input type="checkbox" onClick={handleFastMode}/>
