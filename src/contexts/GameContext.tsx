@@ -11,11 +11,12 @@ type GameContextType = {
   selectedNumber: number | null,
   fastMode: boolean,
   range: Array<number>,
-  handleSelectedCell: (coordinates: Array<number> | null) => void,
-  handleDeleteNumber: () => void,
   handleFastMode: () => void,
+  handleDeleteNumber: () => void,
   handleSelectedNumber: (num: number) => void,
+  handleSelectedCell: (coordinates: Array<number> | null) => void,
   handleAssignNumber: (num: number, coordinates: Array<number> | null) => void,
+  generateRandomBoard: () => Board,
 };
 
 const initialContext: GameContextType = {
@@ -24,11 +25,12 @@ const initialContext: GameContextType = {
   selectedNumber: null,
   fastMode: false,
   range: Array.from({ length: 9 }, (_, i) => i + 1),
+  handleFastMode: () => {},
+  handleAssignNumber: () => {},
   handleSelectedCell: () => {},
   handleDeleteNumber: () => {},
-  handleFastMode: () => {},
   handleSelectedNumber: () => {},
-  handleAssignNumber: () => {},
+  generateRandomBoard: () => Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null))
 };
 
 const inicialBoard: Board = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
@@ -74,6 +76,7 @@ function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   }
 
   const handleDeleteNumber = (): void => {
+    generateRandomBoard()
     const coordinates: Array<number> | null = selectedCell
     if (coordinates != null) {
       const [i, j] = coordinates;
@@ -89,18 +92,45 @@ function GameProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
     }
   }
 
+  const isValid = (board: Board, num: number, coordinates: Array<number>): boolean => {
+    console.log('Entra a la otra función');
+    const [row, col] = coordinates;
+    for(let i = 0; i < 9; i++){
+      if(board[row][i] == num || board[i][col] == num){
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  const generateRandomBoard = (): Board => {
+    for(let i = 0; i < 9; i++){
+      for(let j = 0; j < 9; j++){
+        let random = Math.floor(Math.random() * 9 + 1);
+        while(!isValid(board, random, [i, j])){
+          random = Math.floor(Math.random() * 9 + 1);
+        }
+        board[i][j] = random;
+      }
+    }
+
+    return board;
+  }
+
   return (
     <GameContext.Provider value={{
       board,
-      selectedNumber,
-      selectedCell,
-      fastMode,
       range,
-      handleDeleteNumber,
-      handleSelectedCell,
+      fastMode,
+      selectedCell,
+      selectedNumber,
       handleFastMode,
+      handleDeleteNumber,
+      handleAssignNumber,
+      handleSelectedCell,
       handleSelectedNumber,
-      handleAssignNumber
+      generateRandomBoard,
     }}>
       {children}
     </GameContext.Provider>

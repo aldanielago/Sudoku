@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Number } from './components/Number';
 import { GameContext } from './contexts/GameContext';
-import { IoReturnDownBack } from "react-icons/io5";
 import { CiEraser } from "react-icons/ci";
 
 const App: React.FC = () => {
@@ -39,7 +38,6 @@ const App: React.FC = () => {
       </div>
       <div className="optionsSection">
         <div className="smallContainer">
-          <IoReturnDownBack className="icon" />
           <CiEraser className="icon" onClick={handleDeleteNumber}/>
         </div>
         <label className="switch">
